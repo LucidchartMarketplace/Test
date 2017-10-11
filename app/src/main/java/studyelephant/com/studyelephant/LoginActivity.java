@@ -3,12 +3,14 @@ package studyelephant.com.studyelephant;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
@@ -332,46 +334,49 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
+
             // TODO: attempt authentication against a network service.
-            try {
-                URL url = new URL("http://54.201.45.143:3000/api/signin");
-                HttpURLConnection http = (HttpURLConnection) url.openConnection();
-
-                http.setConnectTimeout(5000);
-                http.setRequestMethod("POST");
+//            try {
+//                URL url = new URL("http://54.201.45.143:3000/api/signin");
+//                HttpURLConnection http = (HttpURLConnection) url.openConnection();
+//
+//                http.setConnectTimeout(5000);
+//                http.setRequestMethod("POST");
 //                http.setDoOutput(true);
-                http.addRequestProperty("Content-Type", "application/json");
-                http.connect();
+//                http.addRequestProperty("Content-Type", "application/json");
+//                http.connect();
+//
+//                String reqData = "{" +
+//                        "\"username\" : \"" + mEmail + "\"," +
+//                        "\"password\" : \"" + mPassword + "\"" +
+//                        "}";
+//
+//                OutputStream reqBody = http.getOutputStream();
+//                writeString(reqData, reqBody);
+//                reqBody.close();
+//
+//                if (http.getResponseCode() == HttpURLConnection.HTTP_OK) {
+//                    InputStream respBody = http.getInputStream();
+//                    String respData = readString(respBody);
+//
+//                    System.out.println(respData);
+//
+//                    return true;
+//                }
+//                else {
+//                    String errorInfo = http.getResponseMessage();
+//                    InputStream respBody = http.getInputStream();
+//                    String respData = readString(respBody);
+//                    errorInfo += "\n" + respData;
+//                    throw new Exception(errorInfo);
+//                }
+//            }
+//            catch (Exception e) {
+//                System.out.println(e.getStackTrace());
+//                return false;
+//            }
 
-                String reqData = "{" +
-                        "\"username\" : \"" + mEmail + "\"," +
-                        "\"password\" : \"" + mPassword + "\"" +
-                        "}";
 
-                OutputStream reqBody = http.getOutputStream();
-                writeString(reqData, reqBody);
-                reqBody.close();
-
-                if (http.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    InputStream respBody = http.getInputStream();
-                    String respData = readString(respBody);
-
-                    System.out.println(respData);
-
-                    return true;
-                }
-                else {
-                    String errorInfo = http.getResponseMessage();
-                    InputStream respBody = http.getInputStream();
-                    String respData = readString(respBody);
-                    errorInfo += "\n" + respData;
-                    throw new Exception(errorInfo);
-                }
-            }
-            catch (Exception e) {
-                System.out.println(e.getStackTrace());
-                return false;
-            }
 //            try {
 //                // Simulate network access.
 //                Thread.sleep(2000);
@@ -386,6 +391,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //                    return pieces[1].equals(mPassword);
 //                }
 //            }
+            return true;
         }
 
         @Override
@@ -394,7 +400,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                Context context = getApplicationContext();
+                Intent intent = new Intent(context, HomeActivity.class);
+                context.startActivity(intent);
+//                finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
