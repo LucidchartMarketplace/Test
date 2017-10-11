@@ -12,10 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private EditText school_name_text = (EditText) findViewById(R.id.school_name_input);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +43,27 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Button search_button = (Button) findViewById(R.id.search_start_button);
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String school_name = school_name_text.getText().toString().trim();
+                if (school_name.isEmpty() || school_name.length() == 0 || school_name.equals("") || school_name == null) {
+                    //add things for invalid school name
+                }else{
+                    searchSchool(school_name);
+                }
+            }
+        });
+
     }
+
+    public void searchSchool(String school_name){
+        // fire to the server and get the information to create the next activity
+    }
+
 
     @Override
     public void onBackPressed() {

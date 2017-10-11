@@ -52,13 +52,14 @@
             android:hint="School Name" />
 
         <Button
-            android:id="@+id/search_button"
+            android:id="@+id/search_start_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/school_name_input"
+            android:layout_marginTop="29dp"
+            android:text="Search!"
             android:layout_below="@+id/school_name_input"
-            android:layout_marginEnd="28dp"
-            android:layout_marginTop="41dp"
-            android:text="Search!" />
+            android:layout_centerHorizontal="true" />
+
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
