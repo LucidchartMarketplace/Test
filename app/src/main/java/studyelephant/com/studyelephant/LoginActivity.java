@@ -335,16 +335,45 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
 
             // TODO: attempt authentication against a network service.
+            android.os.Debug.waitForDebugger();
 
+            try {
+                URL url = new URL("http://54.186.53.3:3000/api/signin");
+                HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
+                http.setConnectTimeout(5000);
+                http.setRequestMethod("POST");
+                http.setDoOutput(true);
+                http.addRequestProperty("Content-Type", "application/json");
+                http.connect();
 
-//            try {
-//                // Simulate network access.
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                return false;
-//            }
-//
+                String reqData = "{" +
+                        "\"username\" : \"" + mEmail + "\"," +
+                        "\"password\" : \"" + mPassword +
+                        "\"}";
+
+                OutputStream reqBody = http.getOutputStream();
+                writeString(reqData, reqBody);
+                reqBody.close();
+
+                if (http.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    InputStream respBody = http.getInputStream();
+                    String respData = readString(respBody);
+
+                    return true;
+                }
+                else {
+                    String errorInfo = http.getResponseMessage();
+                    InputStream respBody = http.getInputStream();
+                    String respData = readString(respBody);
+                    errorInfo += "\n" + respData;
+                    return false;
+                }
+            }
+            catch (Exception e) {
+                System.out.println(e.getStackTrace());
+                return false;
+            }
 //            for (String credential : DUMMY_CREDENTIALS) {
 //                String[] pieces = credential.split(":");
 //                if (pieces[0].equals(mEmail)) {
@@ -352,7 +381,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //                    return pieces[1].equals(mPassword);
 //                }
 //            }
-            return true;
         }
 
         @Override
