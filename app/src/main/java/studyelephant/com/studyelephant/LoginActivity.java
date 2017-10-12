@@ -336,45 +336,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
 
             // TODO: attempt authentication against a network service.
-//            try {
-//                URL url = new URL("http://54.201.45.143:3000/api/signin");
-//                HttpURLConnection http = (HttpURLConnection) url.openConnection();
-//
-//                http.setConnectTimeout(5000);
-//                http.setRequestMethod("POST");
-//                http.setDoOutput(true);
-//                http.addRequestProperty("Content-Type", "application/json");
-//                http.connect();
-//
-//                String reqData = "{" +
-//                        "\"username\" : \"" + mEmail + "\"," +
-//                        "\"password\" : \"" + mPassword + "\"" +
-//                        "}";
-//
-//                OutputStream reqBody = http.getOutputStream();
-//                writeString(reqData, reqBody);
-//                reqBody.close();
-//
-//                if (http.getResponseCode() == HttpURLConnection.HTTP_OK) {
-//                    InputStream respBody = http.getInputStream();
-//                    String respData = readString(respBody);
-//
-//                    System.out.println(respData);
-//
-//                    return true;
-//                }
-//                else {
-//                    String errorInfo = http.getResponseMessage();
-//                    InputStream respBody = http.getInputStream();
-//                    String respData = readString(respBody);
-//                    errorInfo += "\n" + respData;
-//                    throw new Exception(errorInfo);
-//                }
-//            }
-//            catch (Exception e) {
-//                System.out.println(e.getStackTrace());
-//                return false;
-//            }
+
 
 
 //            try {
