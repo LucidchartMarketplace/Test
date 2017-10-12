@@ -3,6 +3,7 @@ package studyelephant.com.studyelephant;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,7 +19,6 @@ import android.widget.EditText;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private EditText school_name_text = (EditText) findViewById(R.id.school_name_input);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,7 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        final EditText school_name_text = (EditText) findViewById(R.id.school_name_input);
         Button search_button = (Button) findViewById(R.id.search_start_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +53,9 @@ public class HomeActivity extends AppCompatActivity
                 String school_name = school_name_text.getText().toString().trim();
                 if (school_name.isEmpty() || school_name.length() == 0 || school_name.equals("") || school_name == null) {
                     //add things for invalid school name
+                    Log.d("School name", "invalid");
                 }else{
+                    Log.d("school name is: " , school_name);
                     searchSchool(school_name);
                 }
             }
