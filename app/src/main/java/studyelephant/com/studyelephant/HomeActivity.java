@@ -177,6 +177,7 @@ public class HomeActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(String s) {
+
             super.onPostExecute(s);
             Context context = getApplication().getApplicationContext();
             Intent intent = new Intent(context, SchoolInfoActivity.class);
@@ -186,8 +187,6 @@ public class HomeActivity extends AppCompatActivity
 
         @Override
         protected String doInBackground(Void... params) {
-
-            android.os.Debug.waitForDebugger();
 
             try {
                 URL url = new URL("https://api.data.gov/ed/collegescorecard/v1/schools?api_key=Cq3vWyIcpAPjs9ri4s1bi0TeLuk2Sv77qvmKj7sI&fields=school.name,school.degrees_awarded.highest,school.school_url,school.city,school.state,school.degree_urbanization,2013.completion.completion_rate_4yr_150nt,2013.cost.attendance.academic_year,2013.earnings.10_yrs_after_entry.median,2013.admissions.sat_scores.average.overall,2013.admissions.admission_rate.overall,2013.student.size&school.name=" + schoolName);
