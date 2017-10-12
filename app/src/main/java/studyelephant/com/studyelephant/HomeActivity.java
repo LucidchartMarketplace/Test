@@ -179,10 +179,8 @@ public class HomeActivity extends AppCompatActivity
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Context context = getApplication().getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-            Toast.makeText(context, s, duration).show();
-            System.out.println(s);
             Intent intent = new Intent(context, SchoolInfoActivity.class);
+            intent.putExtra("Data",s);
             context.startActivity(intent);
         }
 
@@ -192,12 +190,11 @@ public class HomeActivity extends AppCompatActivity
             android.os.Debug.waitForDebugger();
 
             try {
-                URL url = new URL("https://api.data.gov/ed/collegescorecard/v1/schools?api_key=Cq3vWyIcpAPjs9ri4s1bi0TeLuk2Sv77qvmKj7sI&fields=school.name,school.degrees_awarded.highest,school.school_url,school.city,school.state,school.degree_urbanization,2013.completion.completion_rate_4yr_150nt,2013.cost.attendance.academic_year,2013.earnings.10_yrs_after_entry.median");
+                URL url = new URL("https://api.data.gov/ed/collegescorecard/v1/schools?api_key=Cq3vWyIcpAPjs9ri4s1bi0TeLuk2Sv77qvmKj7sI&fields=school.name,school.degrees_awarded.highest,school.school_url,school.city,school.state,school.degree_urbanization,2013.completion.completion_rate_4yr_150nt,2013.cost.attendance.academic_year,2013.earnings.10_yrs_after_entry.median,2013.admissions.sat_scores.average.overall,2013.admissions.admission_rate.overall,2013.student.size&school.name=" + schoolName);
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
                 http.setConnectTimeout(5000);
-                http.setRequestMethod("GET");
-                http.setDoOutput(true);
+                http.setDoInput(true);
                 http.addRequestProperty("Content-Type", "application/json");
                 http.connect();
 
