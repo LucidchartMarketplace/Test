@@ -177,7 +177,7 @@ public class HomeActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(String s) {
-
+            //TODO handle error message
             super.onPostExecute(s);
             Context context = getApplication().getApplicationContext();
             Intent intent = new Intent(context, SchoolInfoActivity.class);
@@ -189,7 +189,7 @@ public class HomeActivity extends AppCompatActivity
         protected String doInBackground(Void... params) {
 
             try {
-                URL url = new URL("https://api.data.gov/ed/collegescorecard/v1/schools?api_key=Cq3vWyIcpAPjs9ri4s1bi0TeLuk2Sv77qvmKj7sI&fields=school.name,school.degrees_awarded.highest,school.school_url,school.city,school.state,school.degree_urbanization,2013.completion.completion_rate_4yr_150nt,2013.cost.attendance.academic_year,2013.earnings.10_yrs_after_entry.median,2013.admissions.sat_scores.average.overall,2013.admissions.admission_rate.overall,2013.student.size&school.name=" + schoolName);
+                URL url = new URL("https://api.data.gov/ed/collegescorecard/v1/schools?api_key=Cq3vWyIcpAPjs9ri4s1bi0TeLuk2Sv77qvmKj7sI&fields=school.name,school.city,school.state,school.ownership,school.school_url,school.degrees_awarded.highest,2015.student.size,2015.student.retention_rate.four_year.full_time,2015.cost.avg_net_price.public,2015.cost.avg_net_price.private,2015.cost.avg_net_price.overall,id,2015.completion.completion_rate_4yr_150nt,2015.completion.completion_cohort_4yr_150nt,2015.cost.net_price.private.by_income_level.0-30000,2015.cost.net_price.private.by_income_level.30001-48000,2015.cost.net_price.private.by_income_level.48001-75000,2015.cost.net_price.private.by_income_level.75001-110000,2015.cost.net_price.private.by_income_level.110001-plus,2015.cost.net_price.public.by_income_level.0-30000,2015.cost.net_price.public.by_income_level.30001-48000,2015.cost.net_price.public.by_income_level.48001-75000,2015.cost.net_price.public.by_income_level.75001-110000,2015.cost.net_price.public.by_income_level.110001-plus,2013.earnings.10_yrs_after_entry.median,2015.student.demographics.race_ethnicity.white,2015.student.demographics.race_ethnicity.black,2015.student.demographics.race_ethnicity.hispanic,2015.student.demographics.race_ethnicity.asian,2015.student.demographics.race_ethnicity.aian,2015.student.demographics.race_ethnicity.nhpi,2015.student.demographics.race_ethnicity.two_or_more,2015.student.demographics.race_ethnicity.non_resident_alien,2015.student.demographics.race_ethnicity.unknown,2015.student.demographics.men,2015.student.demographics.women,2015.admissions.sat_scores.25th_percentile.critical_reading,2015.admissions.sat_scores.75th_percentile.critical_reading,2015.admissions.sat_scores.25th_percentile.math,2015.admissions.sat_scores.75th_percentile.math,2015.admissions.sat_scores.25th_percentile.writing,2015.admissions.sat_scores.75th_percentile.writing,2015.admissions.sat_scores.average.by_ope_id,2015.admissions.admission_rate.overall&school.name=" + schoolName + "&sort=2015.student.size:desc");
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
                 http.setConnectTimeout(5000);
