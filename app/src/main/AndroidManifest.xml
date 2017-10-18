@@ -27,9 +27,11 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/MyMaterialTheme"/>
         <activity android:name=".SchoolInfoActivity"/>
-        <activity android:name=".CollegeDetailActivity">
+        <activity
+            android:name=".CollegeDetailActivity"
+            android:theme="@style/MyMaterialTheme">
         </activity>
     </application>
 
