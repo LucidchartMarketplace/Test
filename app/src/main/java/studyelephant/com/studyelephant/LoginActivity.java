@@ -335,7 +335,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
 
             // TODO: attempt authentication against a network service.
-            android.os.Debug.waitForDebugger();
 
 //            try {
 //                URL url = new URL("http://54.186.53.3:3000/api/signin");

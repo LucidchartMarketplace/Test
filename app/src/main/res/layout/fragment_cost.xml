@@ -97,7 +97,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="$0_30,000"
+                    android:text="$0-30,000"
                     android:textSize="16sp"/>
                 <TextView
                     android:layout_width="0dp"
@@ -114,7 +114,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="$30,001_$48,000"
+                    android:text="$30,001-$48,000"
                     android:textSize="16sp"/>
                 <TextView
                     android:layout_width="0dp"
@@ -131,7 +131,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="$48,001_$75,000"
+                    android:text="$48,001-$75,000"
                     android:textSize="16sp"/>
                 <TextView
                     android:layout_width="0dp"

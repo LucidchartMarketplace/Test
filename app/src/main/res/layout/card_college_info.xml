@@ -130,8 +130,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/view_details"
-                    android:layout_margin="10dp"
-                    android:text="LEARN MORE"/>
+                    android:textColor="@android:color/holo_blue_light"
+                    android:padding="8dp"
+                    android:translationZ="2dp"/>
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>

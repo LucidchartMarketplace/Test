@@ -2,9 +2,6 @@ package studyelephant.com.studyelephant;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -12,13 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.LimitLine;
@@ -189,7 +183,7 @@ public class SchoolInfoActivity extends AppCompatActivity {
             holder.cost_of_attendance_.setText(format.format(college.annual_cost));
             holder.graduation_rate_.setText(percentageFormat.format(college.completion_rate));
             holder.salary_after_attending_.setText(format.format(college.earning));
-            holder.view_details.setText(Html.fromHtml("<b>LEARN MORE<b>"));
+            holder.view_details.setText(Html.fromHtml("<b>VIEW DETAILS<b>"));
             chartSetUp(holder.completion_chart, (float) college.completion_rate, 0.42f, 1, rgb(57,132,182));
             chartSetUp(holder.annual_cost_chart, (float) college.annual_cost, 16300f, 80000, rgb(133,203,207));
             chartSetUp(holder.earning_chart, (float) college.earning, 34100f, 100000, rgb(29,46,129));

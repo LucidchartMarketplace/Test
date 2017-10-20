@@ -16,9 +16,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,11 +34,18 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import studyelephant.com.studyelephant.model.College;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private UniSearchTask searchTask = null;
+    private ProgressBar mProgressBar;
+    private List<String> collegeNames;
+    private AutoCompleteTextView mAutoCompleteTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,25 +72,30 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
+        collegeNames = new ArrayList<String>();
 
-        final EditText school_name_text = (EditText) findViewById(R.id.school_name_input);
+        new CollegeNamesTask().execute();
+
+        mAutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.school_name_input);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_list_item ,this.collegeNames);
+        mAutoCompleteTextView.setAdapter(adapter);
+
         Button search_button = (Button) findViewById(R.id.search_start_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String school_name = school_name_text.getText().toString().trim();
+                String school_name = mAutoCompleteTextView.getText().toString().trim();
                 if (school_name.isEmpty() || school_name.length() == 0 || school_name.equals("") || school_name == null) {
                     //add things for invalid school name
                     Log.d("School name", "invalid");
                 }else{
                     Log.d("school name is: " , school_name);
+                    mProgressBar.setVisibility(View.VISIBLE);
                     searchSchool(school_name);
-
-
-
-
                 }
             }
         });
@@ -148,6 +167,116 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public class CollegeNamesTask extends AsyncTask<Void, Void, String> {
+
+        int total = -1;
+        int per_page = -1;
+        int current_page = 0;
+        int total_page = -1;
+
+        public CollegeNamesTask() {
+
+        }
+
+        public CollegeNamesTask(int total, int per_page, int current_page, int total_page) {
+            this.total = total;
+            this.per_page = per_page;
+            this.current_page = current_page;
+            this.total_page = total_page;
+        }
+
+        private void writeString(String str, OutputStream os) throws IOException {
+            OutputStreamWriter sw = new OutputStreamWriter(os);
+            sw.write(str);
+            sw.flush();
+        }
+
+        private String readString(InputStream is) throws IOException {
+            StringBuilder sb = new StringBuilder();
+            InputStreamReader sr = new InputStreamReader(is);
+            char[] buf = new char[1024];
+            int len;
+            while ((len = sr.read(buf)) > 0) {
+                sb.append(buf, 0, len);
+            }
+            return sb.toString();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            android.os.Debug.waitForDebugger();
+            try {
+                URL url = new URL("https://api.data.gov/ed/collegescorecard/v1/schools?api_key=Cq3vWyIcpAPjs9ri4s1bi0TeLuk2Sv77qvmKj7sI&fields=school.name&page=" + current_page);
+
+                HttpURLConnection http = (HttpURLConnection) url.openConnection();
+
+                http.setConnectTimeout(5000);
+                http.setDoInput(true);
+                http.addRequestProperty("Content-Type", "application/json");
+                http.connect();
+
+
+                if (http.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    InputStream respBody = http.getInputStream();
+                    String respData = readString(respBody);
+
+                    System.out.println(respData);
+                    return respData;
+                }
+                else {
+                    String errorInfo = http.getResponseMessage();
+                    InputStream respBody = http.getInputStream();
+                    String respData = readString(respBody);
+                    errorInfo += "\n" + respData;
+                    return "error";
+                }
+            }
+            catch (Exception e) {
+                System.out.println(e.getStackTrace());
+                return "error";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (!s.equals("error")) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (total_page == -1) {
+                        JSONObject metadata = jsonObject.getJSONObject("metadata");
+                        this.total = metadata.getInt("total");
+                        this.per_page = metadata.getInt("per_page");
+                        this.current_page = metadata.getInt("page");
+                        this.total_page = total / per_page;
+                        if (total_page % per_page > 0)
+                            total_page++;
+                        total_page--;
+                    }
+                    JSONArray results = jsonObject.getJSONArray("results");
+
+                    for (int i = 0; i < results.length(); i++) {
+                        collegeNames.add(results.getJSONObject(i).getString("school.name"));
+                    }
+
+                    if (current_page < total_page) {
+                        new CollegeNamesTask(total, per_page, ++current_page, total_page).execute();
+                    }
+                }
+                catch (JSONException e) {
+
+                }
+            }
+        }
     }
 
     public class UniSearchTask extends AsyncTask<Void, Void, String> {

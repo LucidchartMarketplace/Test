@@ -40,9 +40,9 @@
             android:layout_centerHorizontal="true" />
 
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/school_name_input"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/search_school_text"
             android:layout_centerHorizontal="true"
@@ -60,6 +60,14 @@
             android:layout_below="@+id/school_name_input"
             android:layout_centerHorizontal="true" />
 
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
