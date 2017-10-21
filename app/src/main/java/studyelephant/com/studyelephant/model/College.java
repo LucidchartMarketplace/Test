@@ -27,6 +27,17 @@ public class College {
     public int cost_48001_75000;
     public int cost_75001_110000;
     public int cost_1100001_plus;
+    public float diversity_white;
+    public float diversity_black;
+    public float diversity_hispanic;
+    public float diversity_asian;
+    public float diversity_aian;
+    public float diversity_nhpi;
+    public float diversity_two;
+    public float diversity_non_resident;
+    public float diversity_unknown;
+    public float diversity_men;
+    public float diversity_women;
 
     public College(JSONObject college) {
         try {
@@ -83,6 +94,24 @@ public class College {
                         this.cost_1100001_plus = college.getInt("2015.cost.net_price.private.by_income_level.110001-plus");
                     break;
             }
+            if (!college.isNull("2015.student.demographics.race_ethnicity.white"))
+                this.diversity_white = (float) college.getDouble("2015.student.demographics.race_ethnicity.white");
+            if (!college.isNull("2015.student.demographics.race_ethnicity.black"))
+                this.diversity_black = (float) college.getDouble("2015.student.demographics.race_ethnicity.black");
+            if (!college.isNull("2015.student.demographics.race_ethnicity.hispanic"))
+                this.diversity_hispanic = (float) college.getDouble("2015.student.demographics.race_ethnicity.hispanic");
+            if (!college.isNull("2015.student.demographics.race_ethnicity.asian"))
+                this.diversity_asian = (float) college.getDouble("2015.student.demographics.race_ethnicity.asian");
+            if (!college.isNull("2015.student.demographics.race_ethnicity.aian"))
+                this.diversity_aian = (float) college.getDouble("2015.student.demographics.race_ethnicity.aian");
+            if (!college.isNull("2015.student.demographics.race_ethnicity.nphi"))
+                this.diversity_nhpi = (float) college.getDouble("2015.student.demographics.race_ethnicity.nphi");
+            if (!college.isNull("2015.student.demographics.race_ethnicity.two_or_more"))
+                this.diversity_two = (float) college.getDouble("2015.student.demographics.race_ethnicity.two_or_more");
+            if (!college.isNull("2015.student.demographics.race_ethnicity.non_resident_alien"))
+                this.diversity_non_resident = (float) college.getDouble("2015.student.demographics.race_ethnicity.non_resident_alien");
+            if (!college.isNull("2015.student.demographics.race_ethnicity.unknown"))
+                this.diversity_unknown = (float) college.getDouble("2015.student.demographics.race_ethnicity.unknown");
         }
         catch (JSONException e) {
             e.getMessage();

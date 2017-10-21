@@ -76,7 +76,7 @@
                 android:layout_weight="1"/>
 
             <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/retention_rate"
+                android:id="@+id/earning_"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"/>
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:id="@+id/retention"
+            android:id="@+id/earning"
             android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
