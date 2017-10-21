@@ -48,7 +48,7 @@ public class CollegeDetailActivity extends AppCompatActivity {
         adapter.addFragment(new CostFragment(), "COSTS");
         adapter.addFragment(new StudentFragment(), "STUDENT BODY");
         adapter.addFragment(new AdmissionFragment(), "ADMISSIONS");
-        adapter.addFragment(new GraduationFragment(), "GRADUATION & RETENTION");
+        adapter.addFragment(new GraduationFragment(), "GRADUATION & EARNING");
         viewPager.setAdapter(adapter);
     }
 

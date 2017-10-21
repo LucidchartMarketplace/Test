@@ -92,15 +92,15 @@ public class GraduationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_graduation, container, false);
 
         this.graduation_rate_chart = (BarChart) view.findViewById(R.id.graduation_rate);
-        this.retention_rate_chart = (BarChart) view.findViewById(R.id.retention_rate);
+        this.retention_rate_chart = (BarChart) view.findViewById(R.id.earning_);
 
         chartSetUp(graduation_rate_chart, (float) college.completion_rate, 0.42f, 1f, rgb(57,132,182));
-        chartSetUp(retention_rate_chart, 0.9f, 0.68f, 1f, rgb(57,132,182));
+        chartSetUp(retention_rate_chart, (float) college.earning, 34100f, 100000, rgb(29,46,129));
 
         this.graduation = (TextView) view.findViewById(R.id.graduation);
         this.graduation.setText(NumberFormat.getPercentInstance().format(college.completion_rate));
-        this.retention = (TextView) view.findViewById(R.id.retention);
-        this.retention.setText(NumberFormat.getPercentInstance().format(0.9f));
+        this.retention = (TextView) view.findViewById(R.id.earning);
+        this.retention.setText("$" + NumberFormat.getNumberInstance().format(college.earning));
         return view;
     }
 }
