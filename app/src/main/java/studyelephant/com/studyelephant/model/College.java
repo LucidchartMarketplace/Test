@@ -36,8 +36,8 @@ public class College {
     public float diversity_two;
     public float diversity_non_resident;
     public float diversity_unknown;
-    public float diversity_men;
-    public float diversity_women;
+    public float men;
+    public float women;
 
     public College(JSONObject college) {
         try {
@@ -112,6 +112,11 @@ public class College {
                 this.diversity_non_resident = (float) college.getDouble("2015.student.demographics.race_ethnicity.non_resident_alien");
             if (!college.isNull("2015.student.demographics.race_ethnicity.unknown"))
                 this.diversity_unknown = (float) college.getDouble("2015.student.demographics.race_ethnicity.unknown");
+            if (!college.isNull("2015.student.demographics.men"))
+                this.men = (float) college.getDouble("2015.student.demographics.men");
+            if (!college.isNull("2015.student.demographics.women"))
+                this.women = (float) college.getDouble("2015.student.demographics.women");
+
         }
         catch (JSONException e) {
             e.getMessage();
