@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/tools"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -108,12 +109,14 @@
                     android:id="@+id/cost_of_attendance_"
                     android:gravity="center_horizontal"
                 />
+
                 <TextView
+                    android:id="@+id/graduation_rate_"
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
-                    android:id="@+id/graduation_rate_"
-                    android:gravity="center_horizontal"/>
+                    android:gravity="center_horizontal" />
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
@@ -126,11 +129,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_below="@+id/college_stats">
+
                 <ImageView
-                    android:id="@+id/national_bar"
+                    android:id="@+id/imageView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/national" />
+                    app2:srcCompat="@drawable/national" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -139,6 +144,7 @@
                     android:textColor="@android:color/holo_blue_light"
                     android:padding="8dp"
                     android:translationZ="2dp"/>
+
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
