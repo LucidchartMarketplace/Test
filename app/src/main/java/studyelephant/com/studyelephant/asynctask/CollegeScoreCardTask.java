@@ -15,7 +15,7 @@ import java.net.URL;
 public class CollegeScoreCardTask extends AsyncTask<Void, Void, String> {
 
     protected final String host = "https://api.data.gov/ed/collegescorecard/v1/schools";
-    protected final String key = "api_key=6KVhOQ5Ay1MyNwcgTtLkTKfUUMUOpwf17ie5qz0t";
+    protected final String key = "api_key=62TwTpjU0pPck1oXgiG8HnEhbIkROOpoWqa2YHi4";
     protected String fields;
     protected String queries;
 
