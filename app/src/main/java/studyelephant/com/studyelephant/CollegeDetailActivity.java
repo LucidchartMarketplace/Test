@@ -46,9 +46,10 @@ public class CollegeDetailActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new CostFragment(), "COSTS");
-        adapter.addFragment(new StudentFragment(), "STUDENT BODY");
         adapter.addFragment(new AdmissionFragment(), "ADMISSIONS & GRADUATION");
         adapter.addFragment(new GraduationFragment(), "POST-COLLEGE EARNING");
+        adapter.addFragment(new StudentFragment(), "STUDENT BODY");
+
         viewPager.setAdapter(adapter);
     }
 
