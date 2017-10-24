@@ -30,9 +30,7 @@ import static android.graphics.Color.rgb;
 public class GraduationFragment extends Fragment {
 
     private College college;
-    private BarChart graduation_rate_chart;
     private BarChart retention_rate_chart;
-    private TextView graduation;
     private TextView retention;
 
     public GraduationFragment() {
@@ -91,14 +89,10 @@ public class GraduationFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_graduation, container, false);
 
-        this.graduation_rate_chart = (BarChart) view.findViewById(R.id.graduation_rate);
         this.retention_rate_chart = (BarChart) view.findViewById(R.id.earning_);
 
-        chartSetUp(graduation_rate_chart, (float) college.completion_rate, 0.42f, 1f, rgb(57,132,182));
         chartSetUp(retention_rate_chart, (float) college.earning, 34100f, 100000, rgb(29,46,129));
 
-        this.graduation = (TextView) view.findViewById(R.id.graduation);
-        this.graduation.setText(NumberFormat.getPercentInstance().format(college.completion_rate));
         this.retention = (TextView) view.findViewById(R.id.earning);
         this.retention.setText("$" + NumberFormat.getNumberInstance().format(college.earning));
         return view;

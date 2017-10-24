@@ -39,6 +39,12 @@ public class College {
     public float men;
     public float women;
 
+    public double earning_10;
+    public double earning_9;
+    public double earning_8;
+    public double earning_7;
+    public double earning_6;
+
     public College(JSONObject college) {
         try {
             if (!college.isNull("id"))
@@ -116,7 +122,16 @@ public class College {
                 this.men = (float) college.getDouble("2015.student.demographics.men");
             if (!college.isNull("2015.student.demographics.women"))
                 this.women = (float) college.getDouble("2015.student.demographics.women");
-
+            if (!college.isNull("2013.earnings.10_yrs_after_entry.median"))
+                this.earning_10 = college.getDouble("2013.earnings.10_yrs_after_entry.median");
+            if (!college.isNull("2013.earnings.9_yrs_after_entry.median"))
+                this.earning_9 = college.getDouble("2013.earnings.9_yrs_after_entry.median");
+            if (!college.isNull("2013.earnings.8_yrs_after_entry.median"))
+                this.earning_8 = college.getDouble("2013.earnings.8_yrs_after_entry.median");
+            if (!college.isNull("2013.earnings.7_yrs_after_entry.median"))
+                this.earning_7 = college.getDouble("2013.earnings.7_yrs_after_entry.median");
+            if (!college.isNull("2013.earnings.6_yrs_after_entry.median"))
+                this.earning_6 = college.getDouble("2013.earnings.6_yrs_after_entry.median");
         }
         catch (JSONException e) {
             e.getMessage();
