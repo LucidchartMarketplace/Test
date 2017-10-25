@@ -3,10 +3,12 @@ package studyelephant.com.studyelephant;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -24,19 +26,22 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity {
+/**
+ * Created by Zhihan on 10/24/2017.
+ */
+
+public class CompareFragment extends DialogFragment {
 
     private UniSearchTask searchTask = null;
     private ProgressBar mProgressBar;
     private List<String> collegeNames;
     private AutoCompleteTextView mAutoCompleteTextView;
+    private Button compareButton;
+    private String college;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         collegeNames = new ArrayList<String>();
         try {
@@ -55,44 +60,34 @@ public class SearchActivity extends AppCompatActivity {
             String s = e.getMessage();
             String s2 = e.getStackTrace().toString();
         }
-
-
-        mAutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.school_name_input);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_list_item ,this.collegeNames);
-        mAutoCompleteTextView.setAdapter(adapter);
-
-        Button search_button = (Button) findViewById(R.id.search_start_button);
-        search_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String school_name = mAutoCompleteTextView.getText().toString().trim().replace(" ","+");
-                if (school_name.isEmpty() || school_name.length() == 0 || school_name.equals("") || school_name == null) {
-                    //add things for invalid school name
-                    Log.d("School name", "invalid");
-                }else{
-                    Log.d("school name is: " , school_name);
-                    mProgressBar.setVisibility(View.VISIBLE);
-                    searchSchool(school_name);
-                }
-            }
-        });
-
-    }
-
-    public void searchSchool(String school_name){
-        // fire to the server and get the information to create the next activity
-        searchTask = new UniSearchTask(school_name);
-        searchTask.execute((Void) null);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = inflater.inflate(R.layout.fragment_compare, container, false);
+        getDialog().setTitle("Compare with another college");
 
-        mProgressBar.setVisibility(View.INVISIBLE);
+        college = getArguments().getString("college");
+
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+
+        mAutoCompleteTextView = (AutoCompleteTextView) rootView.findViewById(R.id.school_name_input);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.simple_list_item ,this.collegeNames);
+        mAutoCompleteTextView.setAdapter(adapter);
+
+        compareButton = (Button) rootView.findViewById(R.id.compare_button);
+        compareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String school_name = mAutoCompleteTextView.getText().toString().replace(" ", "+");
+                searchTask = new UniSearchTask(school_name);
+                searchTask.execute((Void) null);
+            }
+        });
+
+        return rootView;
     }
-
     public class UniSearchTask extends AsyncTask<Void, Void, String> {
 
         private final String schoolName;
@@ -122,9 +117,10 @@ public class SearchActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             //TODO handle error message
             super.onPostExecute(s);
-            Context context = getApplication().getApplicationContext();
+            Context context = getContext();
             Intent intent = new Intent(context, SchoolInfoActivity.class);
             intent.putExtra("Data",s);
+            intent.putExtra("college", college);
             context.startActivity(intent);
         }
 

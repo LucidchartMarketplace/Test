@@ -2,6 +2,7 @@ package studyelephant.com.studyelephant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.LimitLine;
@@ -36,6 +38,7 @@ public class SchoolInfoActivity extends AppCompatActivity {
 
     private String Data;
     private RecyclerView rv;
+    private FragmentManager fm;
 
 
 
@@ -47,6 +50,10 @@ public class SchoolInfoActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         List<College> colleges = new ArrayList<>();
+
+        if (bundle.getString("college") != null) {
+            colleges.add(new Gson().fromJson(bundle.getString("college"), College.class));
+        }
 
         if (bundle.getString("Data") != null) {
             Data = bundle.getString("Data");
@@ -93,6 +100,7 @@ public class SchoolInfoActivity extends AppCompatActivity {
             TextView graduation_rate_;
             TextView salary_after_attending_;
             TextView view_details;
+            TextView compare;
             BarChart completion_chart;
             BarChart annual_cost_chart;
             BarChart earning_chart;
@@ -118,6 +126,20 @@ public class SchoolInfoActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         intent.putExtra("Data", gson.toJson(colleges.get(getAdapterPosition())));
                         context.startActivity(intent);
+                    }
+                });
+                compare = (TextView) itemView.findViewById(R.id.compare);
+                compare.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("college", new Gson().toJson(colleges.get(getPosition())));
+
+                        fm = getSupportFragmentManager();
+                        CompareFragment compareFragment = new CompareFragment();
+                        compareFragment.setArguments(bundle);
+                        compareFragment.show(fm, "");
+//                        Toast.makeText(getApplicationContext(), "Compare Clicked",Toast.LENGTH_LONG).show();
                     }
                 });
                 completion_chart = (BarChart) itemView.findViewById(R.id.completion_chart);
@@ -184,6 +206,7 @@ public class SchoolInfoActivity extends AppCompatActivity {
             holder.graduation_rate_.setText(percentageFormat.format(college.completion_rate));
             holder.salary_after_attending_.setText(format.format(college.earning));
             holder.view_details.setText(Html.fromHtml("<b>VIEW DETAILS<b>"));
+            holder.compare.setText(Html.fromHtml("<b>COMPARE<b>"));
             chartSetUp(holder.completion_chart, (float) college.completion_rate, 0.42f, 1, rgb(57,132,182));
             chartSetUp(holder.annual_cost_chart, (float) college.annual_cost, 16300f, 80000, rgb(133,203,207));
             chartSetUp(holder.earning_chart, (float) college.earning, 34100f, 100000, rgb(29,46,129));
